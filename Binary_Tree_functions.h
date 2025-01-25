@@ -17,77 +17,57 @@
 //This is header file containing all extra Binary Tree functions
 
 template <typename T>
-int height (TreeNode<T>* root) {
+int get_height (TreeNode<T>* root) {
     if (root == nullptr) {
         return 0;
     }
-    return std::max (height(root->left), height(root->right)) + 1;
+    return std::max (get_height(root->left), get_height(root->right)) + 1;
 }
 
 template <typename T>
-int size (TreeNode<T>* root) {
+int get_size (TreeNode<T>* root) {
     if (root == nullptr) {
         return 0;
     }
-    return size(root->left) + size(root->right) + 1;
+    return get_size(root->left) + get_size(root->right) + 1;
 }
 
 template <typename T>
-void preorder (std::vector<T>& values, TreeNode<T>* root) {
+void preorder_traversal (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
         return;
     }
     values.push_back (root->key);
-    inorder (values, root->left);
-    inorder (values, root->right);
+    preorder_traversal (values, root->left);
+    preorder_traversal (values, root->right);
 }
 
 template <typename T>
-std::vector<T> preorder_traversal (TreeNode<T>* root) {
-    std::vector<T> values;
-    preorder (values, root);
-    return values;
-}
-
-template <typename T>
-void inorder (std::vector<T>& values, TreeNode<T>* root) {
+void inorder_traversal (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
         return;
     }
-    inorder (values, root->left);
+    inorder_traversal (values, root->left);
     values.push_back (root->key);
-    inorder (values, root->right);
+    inorder_traversal (values, root->right);
     }
-template <typename T>
-std::vector<T> inorder_traversal (TreeNode<T>* root) {
-    std::vector<T> values;
-    inorder (values, root);
-    return values;
-}
 
 template <typename T>
-void postorder (std::vector<T>& values, TreeNode<T>* root) {
+void postorder_traversal (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
         return;
     }
-    inorder (values, root->left);
-    inorder (values, root->right);
+    postorder_traversal (values, root->left);
+    postorder_traversal (values, root->right);
     values.push_back (root->key);
-}
-template <typename T>
-std::vector<T> postorder_traversal (TreeNode<T>* root) {
-    std::vector<T> values;
-    postorder (values, root);
-    return values;
 }
 
 template <typename T>
-std::vector<T> levelorder_traversal (TreeNode<T>* root) {
+void levelorder_traversal (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
-        return std::vector<T> {};
+        return;
     }
-    
-    std::vector<T> values;
+
     values.push_back(root->key);
     std::queue<TreeNode<T>*> q;
     q.push(root);
@@ -105,18 +85,16 @@ std::vector<T> levelorder_traversal (TreeNode<T>* root) {
             q.push(temp->right);
         }
     }
-    return values;
 }
 
 template <typename T>
-std::vector<T> left_view (TreeNode<T>* root) {
+void left_view (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
-        return std::vector<T> {};
+        return;
     }
     std::queue<std::pair<int, TreeNode<T>*>> q;
     q.push({0, root});
         
-    std::vector<T> values;
     int req_level = 0;
             
     while (!q.empty()) {
@@ -134,18 +112,16 @@ std::vector<T> left_view (TreeNode<T>* root) {
             q.push({req_level, temp->right});
         }
     }
-    return values;
 }
 
 template <typename T>
-std::vector<T> right_view (TreeNode<T>* root) {
+void right_view (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
-        return std::vector<T> {};
+        return;
     }
     
     std::queue<std::pair<int, TreeNode<T>*>> q;
     q.push({0, root});
-    std::vector<T> values;
     int req_level = 0;
     
     while (!q.empty()) {
@@ -163,16 +139,14 @@ std::vector<T> right_view (TreeNode<T>* root) {
             q.push({req_level, temp->left});
         }
     }
-    return values;
 }
 
 template <typename T>
-std::vector<T> bottom_view (TreeNode<T>* root) {
+void bottom_view (std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
-        return std::vector<T> {};
+        return;
     }
     
-    std::vector<T> values;
     std::map<int, T> mp;
     std::queue<std::pair<int, TreeNode<T>*>> q;
     q.push({0, root});
@@ -199,16 +173,14 @@ std::vector<T> bottom_view (TreeNode<T>* root) {
         values.push_back(p.second);
     }
 
-    return values;
 }
 
 template <typename T>
-std::vector<T> top_view(TreeNode<T>* root) {
+void top_view(std::vector<T>& values, TreeNode<T>* root) {
     if (root == nullptr) {
-        return std::vector<T> {};
+        return;
     }
-    
-    std::vector<T> values;
+
     std::map<int, T> mp;
     std::queue<std::pair<int, TreeNode<T>*>> q;
 
@@ -234,8 +206,6 @@ std::vector<T> top_view(TreeNode<T>* root) {
     for (std::pair<int, T> p : mp) {
         values.push_back(p.second);
     }
-
-    return values;
 }
 
 

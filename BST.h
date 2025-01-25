@@ -16,29 +16,6 @@ class BST {
     std::function<bool(T,T)> compare;
     std::function<bool(T,T)> compare_equal;
     
-public:
-    BST() : root (nullptr) {
-        compare = [&] (T a, T b) -> bool {
-            return a < b;
-        };
-        compare_equal = [&] (T a, T b) -> bool {
-            return a == b;
-        };
-    }
-    
-    BST(std::function<bool(T,T)> user_compare, std::function<bool(T,T)> user_compare_equal) : root (nullptr), compare(user_compare), compare_equal(user_compare_equal) {}
-    
-    void deleteNode (TreeNode<T>* node) {
-        if (node) {
-            deleteNode (node->left);
-            deleteNode (node->right);
-            delete node;
-        }
-    }
-    ~BST () {
-        deleteNode(root);
-    }
-    
     TreeNode<T>* add_node (TreeNode<T>* root, T key) {
         if (root == nullptr) {
             root = new TreeNode(key);
@@ -56,12 +33,16 @@ public:
         }
         return root;
     }
-    TreeNode<T>* add (T key) {
-        return root = add_node (root, key);
+    
+    void deleteNode (TreeNode<T>* node) {
+        if (node) {
+            deleteNode (node->left);
+            deleteNode (node->right);
+            delete node;
+        }
     }
     
     TreeNode<T>* remove_node (TreeNode<T>* root, T key) {
-        std::cout<<"now in: "<<root->key<<" and key: "<<key<<"\n";
         if (root == nullptr) {
             return nullptr;
         }
@@ -95,6 +76,27 @@ public:
         }
         return root;
     }
+    
+public:
+    BST() : root (nullptr) {
+        compare = [&] (T a, T b) -> bool {
+            return a < b;
+        };
+        compare_equal = [&] (T a, T b) -> bool {
+            return a == b;
+        };
+    }
+    
+    BST(std::function<bool(T,T)> user_compare, std::function<bool(T,T)> user_compare_equal) : root (nullptr), compare(user_compare), compare_equal(user_compare_equal) {}
+    
+    ~BST () {
+        deleteNode(root);
+    }
+    
+    TreeNode<T>* add (T key) {
+        return root = add_node (root, key);
+    }
+    
     TreeNode<T>* remove (T key) {
         return root = remove_node (root, key);
     }
@@ -127,8 +129,62 @@ public:
         }
         return nullptr;
     }
+    
+    std::vector<T> inorder() {
+        std::vector<T> values;
+        inorder_traversal (values, root);
+        return values;
+    }
+    
+    std::vector<T> postorder() {
+        std::vector<T> values;
+        postorder_traversal (values, root);
+        return values;
+    }
 
-    TreeNode<T>* getRoot() const { return root; }
+    std::vector<T> preorder() {
+        std::vector<T> values;
+        inorder_traversal(values, root);
+        return values;
+    }
+    
+    std::vector<T> levelorder() {
+        std::vector<T> values;
+        levelorder_traversal(values, root);
+        return values;
+    }
+    
+    std::vector<T> topview() {
+        std::vector<T> values;
+        top_view (values, root);
+        return values;
+    }
+    
+    std::vector<T> bottomview() {
+        std::vector<T> values;
+        bottom_view (values, root);
+        return values;
+    }
+    
+    std::vector<T> rightview() {
+        std::vector<T> values;
+        right_view (values, root);
+        return values;
+    }
+    
+    std::vector<T> leftview() {
+        std::vector<T> values;
+        left_view (values, root);
+        return values;
+    }
+    
+    int height () {
+        return get_height(root);
+    }
+    
+    int size () {
+        return get_size(root);
+    }
 };
 
 #endif /* BST_h */

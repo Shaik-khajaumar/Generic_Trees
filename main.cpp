@@ -57,16 +57,16 @@ int main () {
     bst.add(s10);
     bst.add(s11);
     
-    std::cout<<"size: "<<size(bst.getRoot())<<"\n";
+    std::cout<<"size: "<<bst.size()<<"\n";
     
-    std::vector<Student> v = inorder_traversal(bst.getRoot());
+    std::vector<Student> v = bst.inorder();
     std::cout<<"INorder traversal: \n";
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
         
     std::cout<<"Levelorder traversal: \n";
-    v = levelorder_traversal(bst.getRoot());
+    v = bst.levelorder();
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
@@ -74,12 +74,12 @@ int main () {
     bst.remove(s4);
     std::cout<<"after removing s4: \n";
     std::cout<<"INorder traversal: \n";
-    v = inorder_traversal(bst.getRoot());
+    v = bst.inorder();
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
     std::cout<<"Levelorder traversal: \n";
-    v = levelorder_traversal(bst.getRoot());
+    v = bst.levelorder();
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
@@ -88,13 +88,13 @@ int main () {
     bst.remove(s1);
     std::cout<<"after removing s1: \n";
     std::cout<<"Inorder traversal: \n";
-    v = inorder_traversal(bst.getRoot());
+    v = bst.inorder();
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
     
     std::cout<<"Levelorder traversal: \n";
-    v = levelorder_traversal(bst.getRoot());
+    v = bst.levelorder();
     for (auto s : v) {
         std::cout<<s<<"\n";
     }
